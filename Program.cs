@@ -34,6 +34,7 @@ namespace NorthwindConsole
                     Console.WriteLine("8) Display record from product table");
                     Console.WriteLine("9) Display active products by category (inactive products in red)");
                     Console.WriteLine("10) Display active products of a specific category (inative products in red)");
+                    Console.WriteLine("11) Edit record from categories table");
                     Console.WriteLine("\"q\" to quit");
                     choice = Console.ReadLine();
                     Console.Clear();
@@ -346,6 +347,27 @@ namespace NorthwindConsole
 
                             }
                         }
+                    }
+                    else if (choice == "11")
+                    {
+                        //edit record from category table 
+                        var db = new NWConsole_48_AMSContext();
+                        Console.WriteLine("Enter category ID you'd like to edit from list below: ");
+                        var query = db.Categories.OrderBy(p => p.CategoryId);
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"{query.Count()} records returned");
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        foreach (var item in query)
+                        {
+                            Console.WriteLine($"{item.CategoryId} - {item.CategoryName}");
+                        }
+
+                        int editedCategoryId = Convert.ToInt32(Console.ReadLine());
+                        Category changedCategory = db.Categories.FirstOrDefault(p => p.CategoryId == editedCategoryId);
+                        Console.Write("Enter category name: ");
+                        changedCategory.CategoryName = Console.ReadLine();
+                        db.EditCategory(changedCategory);
                     }
                     Console.WriteLine();
                 } while (choice.ToLower() != "q");

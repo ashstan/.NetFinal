@@ -309,5 +309,10 @@ namespace Week11_NorthwindConsole.Model
             this.Add(category);
             this.SaveChanges();
         }
+
+        public void EditCategory(Category category) {
+            this.Update(category);
+            this.SaveChanges();
+        }
     }
 }
